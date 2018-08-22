@@ -1,0 +1,14 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.93.193.177:8761/eureka/
+spring:
+  application:
+    name: weixinservice
+  cloud:
+    config:
+      profile: gs
+      discovery:
+        enabled: true
+        service-id: configservice
+  

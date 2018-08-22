@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzh.weixinservice.persistence.TAccountUserMapper">
+  <resultMap id="BaseResultMap" type="TAccountUser">
+    <id column="uuid" jdbcType="BIGINT" property="uuid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="usable_flag" jdbcType="INTEGER" property="usableFlag" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="login_pwd" jdbcType="VARCHAR" property="loginPwd" />
+    <result column="pwd_salt" jdbcType="VARCHAR" property="pwdSalt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uuid, create_time, usable_flag, mobile, login_pwd, pwd_salt
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_account_user
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_account_user
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="TAccountUser">
+    <selectKey keyProperty="uuid" order="BEFORE" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_account_user (uuid, create_time, usable_flag, 
+      mobile, login_pwd, pwd_salt
+      )
+    values (#{uuid,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{usableFlag,jdbcType=INTEGER}, 
+      #{mobile,jdbcType=VARCHAR}, #{loginPwd,jdbcType=VARCHAR}, #{pwdSalt,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="TAccountUser">
+    <selectKey keyProperty="uuid" order="BEFORE" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_account_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      uuid,
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="usableFlag != null">
+        usable_flag,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="loginPwd != null">
+        login_pwd,
+      </if>
+      <if test="pwdSalt != null">
+        pwd_salt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{uuid,jdbcType=BIGINT},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usableFlag != null">
+        #{usableFlag,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null">
+        #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdSalt != null">
+        #{pwdSalt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="TAccountUser">
+    update t_account_user
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usableFlag != null">
+        usable_flag = #{usableFlag,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null">
+        login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdSalt != null">
+        pwd_salt = #{pwdSalt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="TAccountUser">
+    update t_account_user
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      usable_flag = #{usableFlag,jdbcType=INTEGER},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      pwd_salt = #{pwdSalt,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+</mapper>
